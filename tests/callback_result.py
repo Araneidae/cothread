@@ -11,12 +11,12 @@ from cothread.catools import *
 
 def Thread():
     for pv in sys.argv[1:]:
-        print pv, '=>',
+        print(pv, '=>', end = ' ')
         try:
             v = cothread.CallbackResult(caget, pv)
-            print v
+            print(v)
         except:
-            print 'failed'
+            print('failed')
             traceback.print_exc()
 
     cothread.Callback(cothread.Quit)

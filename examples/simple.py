@@ -1,8 +1,6 @@
-#!/bin/env dls-python2.6
+#!/usr/bin/env python3
 
 '''Channel Access Example'''
-
-from __future__ import print_function
 
 # load correct version of catools
 import require

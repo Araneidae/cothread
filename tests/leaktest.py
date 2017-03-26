@@ -1,8 +1,6 @@
-#!/dls_sw/tools/python2.4-debug/bin/python2.4
+#!/usr/bin/env python3
 
 '''Tests for memory leaks.'''
-
-from __future__ import print_function
 
 import sys
 sys.path.append('/scratch/local/python-debug')

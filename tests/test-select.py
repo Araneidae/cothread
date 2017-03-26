@@ -1,8 +1,6 @@
-#!/usr/bin/env python2.6
+#!/usr/bin/env python3
 
 # Testing coselect
-
-from __future__ import print_function
 
 import require
 from cothread import *

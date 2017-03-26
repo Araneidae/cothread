@@ -1,6 +1,4 @@
-#!/usr/bin/env dls-python2.6
-
-from __future__ import print_function
+#!/usr/bin/env python3
 
 import sys
 

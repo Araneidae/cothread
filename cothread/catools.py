@@ -46,8 +46,6 @@ Supports the following methods:
 See the documentation for the individual functions for more details on using
 them.'''
 
-from __future__ import print_function
-
 import os
 import sys
 import atexit
@@ -101,15 +99,10 @@ class ca_nothing(Exception):
         return 'ca_nothing(%r, %d)' % (self.name, self.errorcode)
 
     def __str__(self):
-        return '%s: %s' % (self.name, cadef.ca_message(self.errorcode))
+        return '%s: %s' % (self.name, cadef.ca_message(self.errorcode).decode())
 
-    def __nonzero__(self):
+    def __bool__(self):
         return self.ok
-
-    def __iter__(self):
-        '''This is *not* supposed to be an iterable object, but the base class
-        appears to have a different opinion.  So enforce this.'''
-        raise TypeError('iteration over non-sequence')
 
 
 def maybe_throw(function):
@@ -146,8 +139,8 @@ def ca_timeout(event, timeout, name):
     ca_nothing timeout exception containing the PV name.'''
     try:
         return event.Wait(timeout)
-    except cothread.Timedout:
-        raise ca_nothing(name, cadef.ECA_TIMEOUT)
+    except cothread.Timedout as timeout:
+        raise ca_nothing(name, cadef.ECA_TIMEOUT) from timeout
 
 
 # ----------------------------------------------------------------------------
@@ -196,7 +189,7 @@ class Channel(object):
 
         chid = ctypes.c_void_p()
         cadef.ca_create_channel(
-            name, self.on_ca_connect, ctypes.py_object(self),
+            name.encode(), self.on_ca_connect, ctypes.py_object(self),
             0, ctypes.byref(chid))
         # Setting this allows a channel object to autoconvert into the chid
         # when passed to ca_ functions.
@@ -1052,6 +1045,6 @@ if False:
     @exception_handler
     def catools_exception(args):
         '''print ca exception message'''
-        print('catools_exception:', args.ctx, cadef.ca_message(args.stat),
-            file = sys.stderr)
+        print('catools_exception:', args.ctx,
+            cadef.ca_message(args.stat).decode(), file = sys.stderr)
     cadef.ca_add_exception_event(catools_exception, 0)

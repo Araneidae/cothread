@@ -29,8 +29,6 @@
 '''Support for cooperative select functions.  Replaces the functionality of
 the standard select module.'''
 
-from __future__ import absolute_import
-
 import select as _select
 import cothread
 
@@ -68,7 +66,7 @@ def select_hook():
 # A helpful routine to ensure that our select() behaves as much as possible
 # like the real thing!
 def _AsFileDescriptor(file):
-    if isinstance(file, (int, long)):
+    if isinstance(file, int):
         return file
     else:
         return file.fileno()
