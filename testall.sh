@@ -25,7 +25,7 @@ fi
 if [[ $# > 0 ]]; then
     PYTHONS=("$@")
 else
-    PYTHONS=(python)
+    PYTHONS=(python3)
 fi
 
 
